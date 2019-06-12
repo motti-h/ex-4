@@ -1,7 +1,7 @@
 import { Product } from '../models';
 import { Category } from '../models';
-import * as products from './products.json';
-import * as categories from './categories.json';
+import products from './products.json';
+import categories from './categories.json';
 
 interface Store {
   products: Product[];

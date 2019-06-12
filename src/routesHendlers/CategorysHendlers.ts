@@ -2,8 +2,11 @@ import { Category } from '../models';
 import { store } from '../store';
 import { Response, Request, NextFunction, RequestHandler } from 'express';
 import * as categoryUtils from '../utils/categoryUtils';
+import * as Logger from '../utils/logger';
+
 const categories = store.categories;
 const products = store.products;
+const createLogger = Logger.createLogger('productLogger');
 
 export function categoryGetHandler(req: Request, res: Response, next: NextFunction): any {
     res.send(categories);
@@ -12,6 +15,7 @@ export function categoryGetHandler(req: Request, res: Response, next: NextFuncti
 export function categoryGetProductsByIdHandler(req: Request, res: Response, next: NextFunction): any {
     const id = req.params.id; // url params
     const existing = categoryUtils.getCategoryById(id);
+    createLogger.info(`Requested project by id - ${id}`);
 
     if (!existing) {
         res.sendStatus(404);

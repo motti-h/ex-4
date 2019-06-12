@@ -1,20 +1,43 @@
-import * as express from 'express';
-import * as cors from 'cors';
-import {config} from './controllers/routeConfig'
-import * as ProductsHandlers from './routesHendlers/ProductsHendlers'
+import express from 'express';
+import cors from 'cors';
+import {config} from './controllers/routeConfig';
+import expressWinston from 'express-winston';
+import winston from 'winston';
+import * as util from './utils/utils';
+const alignedWithColorsAndTime = winston.format.combine(
+  winston.format.colorize(),
+  winston.format.timestamp(),
+  winston.format.align(),
+  winston.format.printf((info) => {
+    const {
+      timestamp, level, message, ...args
+    } = info;
+
+    const ts = timestamp.slice(0, 19).replace('T', ' ');
+    return `${ts} [${level}]: ${message} ${Object.keys(args).length ? JSON.stringify(args, null, 2) : ''}`;
+  }),
+);
 
 const app = express();
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
-app.use(express.static('./src/video'));
-//app.use('/products/:id', ProductsHandlers.productGetSpecificHandler );
-//app.use('/products/', ProductsHandlers.productPostHandler );
+app.use('/:id', util.middleCheckId);
+
+app.use(expressWinston.logger({
+  transports: [new winston.transports.Console()],
+  format: alignedWithColorsAndTime,
+}));
+
 Object.keys(config).forEach((k) => {
     const routeConfig = config[k];
     app.use(routeConfig.prefix, routeConfig.router);
   });
 
+app.use(expressWinston.errorLogger({
+    transports: [new winston.transports.Console()],
+    format: alignedWithColorsAndTime,
+}));
 
+app.use(util.endError);
 export { app };

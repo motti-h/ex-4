@@ -1,9 +1,13 @@
 import { Product } from '../models';
 import { store } from '../store';
 import { Response, Request, NextFunction, RequestHandler } from 'express';
-import * as productUtils from '../utils/productUtils'
+import * as productUtils from '../utils/productUtils';
+import * as Logger from '../utils/logger';
+import * as validation from '../validation/common';
+
 const products = store.products;
 const sizeIlegal = 3;
+const createLogger = Logger.createLogger('productLogger');
 
 export function productGetHandler(req: Request, res: Response, next: NextFunction): any {
     res.send(productUtils.getAllProducts());
@@ -12,6 +16,7 @@ export function productGetHandler(req: Request, res: Response, next: NextFunctio
 export function productGetSpecificHandler(req: Request, res: Response, next?: NextFunction): Promise<any> {
     const id = req.params.id; // url params
     const maybeProduct = productUtils.findProduct(id); // async part
+    createLogger.info(`Requested project by id - ${id}`);
     return (maybeProduct) ? Promise.resolve(maybeProduct) : Promise.reject(new Error('404'));
 }
 
@@ -57,11 +62,12 @@ export function productDeleteHandler(req: Request, res: Response, next: NextFunc
 
 export function middleCheckName(req: Request, res: Response, next: NextFunction): any {
     const newProduct: Product = req.body as Product;
-
+    validation.getOrThrow<string>(newProduct.name, validation.nameSchema);
+    /*
     if ( newProduct.name.length < 3) {
         next(new Error('409'));
         return;
     }
-
+    */
     next();
 }

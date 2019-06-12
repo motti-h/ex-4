@@ -1,11 +1,8 @@
 import { Router } from 'express';
 import * as ProductsHendlers from '../routesHendlers/ProductsHendlers';
 import * as asyncMaker from '../utils/async';
-import * as util from '../utils//utils';
 
 const productRouter = Router();
-
-productRouter.use('/:id', util.middleCheckId); // middleware id check
 
 productRouter.get('/', ProductsHendlers.productGetHandler);
 
@@ -17,7 +14,5 @@ productRouter.use('/', ProductsHendlers.middleCheckName); // middleware name che
 productRouter.post('/', ProductsHendlers.productPostHandler);
 
 productRouter.put('/:id', ProductsHendlers.productPutHandler);
-
-productRouter.use(util.endError);
 
 export { productRouter };
