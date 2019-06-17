@@ -30,11 +30,19 @@
   "dependencies": {
     "@types/express-winston": "^3.0.3",
     "@types/joi": "^14.3.3",
+    "@types/jsonwebtoken": "^8.3.2",
+    "@types/passport": "^1.0.0",
+    "@types/passport-jwt": "^3.0.1",
+    "@types/passport-local": "^1.0.33",
     "@types/winston": "^2.4.4",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-winston": "^3.1.0",
     "joi": "^14.3.1",
+    "jsonwebtoken": "^8.5.1",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
     "save": "^2.4.0",
     "winston": "^3.2.1"
   }

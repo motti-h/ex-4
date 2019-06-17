@@ -1,16 +1,29 @@
 import { Router } from 'express';
 import * as ProductsHendlers from '../routesHendlers/ProductsHendlers';
 import * as asyncMaker from '../utils/async';
-
+import * as middle from '../utils/middleware';
+import * as credentials from '../models/credentials';
 const productRouter = Router();
 
-productRouter.get('/', ProductsHendlers.productGetHandler);
+productRouter.use('/:id', middle.middleCheckId);
 
-productRouter.get('/:id', asyncMaker.wrapAsyncAndSend(ProductsHendlers.productGetSpecificHandler) ); // get specific ASYNC
+productRouter.get('/', middle.authenticate(),
+ProductsHendlers.productGetHandler);
 
-productRouter.delete('/:id', ProductsHendlers.productDeleteHandler);
+productRouter.get('/:id',
+middle.authenticate(),
+asyncMaker.wrapAsyncAndSend(ProductsHendlers.productGetSpecificHandler) ); // get specific ASYNC
 
-productRouter.use('/', ProductsHendlers.middleCheckName); // middleware name check
+productRouter.delete('/:id',
+middle.authenticate(),
+middle.authorize(credentials.UserRole.Admin, credentials.UserRole.Contributor),
+ProductsHendlers.productDeleteHandler);
+
+productRouter.use('/',
+middle.authenticate(),
+middle.authorize(credentials.UserRole.Admin),
+middle.middleCheckName); // middleware name check
+
 productRouter.post('/', ProductsHendlers.productPostHandler);
 
 productRouter.put('/:id', ProductsHendlers.productPutHandler);

@@ -3,7 +3,9 @@ import cors from 'cors';
 import {config} from './controllers/routeConfig';
 import expressWinston from 'express-winston';
 import winston from 'winston';
-import * as util from './utils/utils';
+import * as middle from './utils/middleware';
+import {initPassport} from './utils/passport';
+
 const alignedWithColorsAndTime = winston.format.combine(
   winston.format.colorize(),
   winston.format.timestamp(),
@@ -17,12 +19,11 @@ const alignedWithColorsAndTime = winston.format.combine(
     return `${ts} [${level}]: ${message} ${Object.keys(args).length ? JSON.stringify(args, null, 2) : ''}`;
   }),
 );
-
+initPassport();
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
-app.use('/:id', util.middleCheckId);
 
 app.use(expressWinston.logger({
   transports: [new winston.transports.Console()],
@@ -39,5 +40,5 @@ app.use(expressWinston.errorLogger({
     format: alignedWithColorsAndTime,
 }));
 
-app.use(util.endError);
+app.use(middle.endError);
 export { app };

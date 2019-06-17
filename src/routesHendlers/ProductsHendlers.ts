@@ -63,11 +63,5 @@ export function productDeleteHandler(req: Request, res: Response, next: NextFunc
 export function middleCheckName(req: Request, res: Response, next: NextFunction): any {
     const newProduct: Product = req.body as Product;
     validation.getOrThrow<string>(newProduct.name, validation.nameSchema);
-    /*
-    if ( newProduct.name.length < 3) {
-        next(new Error('409'));
-        return;
-    }
-    */
     next();
 }
