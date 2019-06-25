@@ -14,8 +14,8 @@ export function productGetHandler(req: Request, res: Response, next: NextFunctio
 }
 
 export function productGetSpecificHandler(req: Request, res: Response, next?: NextFunction): Promise<any> {
-    const id = req.params.id; // url params
-    const maybeProduct = productUtils.findProduct(id); // async part
+    const id = req.params.id;
+    const maybeProduct = productUtils.findProduct(id);
     createLogger.info(`Requested project by id - ${id}`);
     return (maybeProduct) ? Promise.resolve(maybeProduct) : Promise.reject(new Error('404'));
 }

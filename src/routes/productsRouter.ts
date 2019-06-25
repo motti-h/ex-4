@@ -12,7 +12,7 @@ ProductsHendlers.productGetHandler);
 
 productRouter.get('/:id',
 middle.authenticate(),
-asyncMaker.wrapAsyncAndSend(ProductsHendlers.productGetSpecificHandler) ); // get specific ASYNC
+asyncMaker.wrapAsyncAndSend(ProductsHendlers.productGetSpecificHandler) );
 
 productRouter.delete('/:id',
 middle.authenticate(),
@@ -22,7 +22,7 @@ ProductsHendlers.productDeleteHandler);
 productRouter.use('/',
 middle.authenticate(),
 middle.authorize(credentials.UserRole.Admin),
-middle.middleCheckName); // middleware name check
+middle.middleCheckName);
 
 productRouter.post('/', ProductsHendlers.productPostHandler);
 

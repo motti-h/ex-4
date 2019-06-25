@@ -13,7 +13,7 @@ export function categoryGetHandler(req: Request, res: Response, next: NextFuncti
 }
 
 export function categoryGetProductsByIdHandler(req: Request, res: Response, next: NextFunction): any {
-    const id = req.params.id; // url params
+    const id = req.params.id;
     const existing = categoryUtils.getCategoryById(id);
     createLogger.info(`Requested project by id - ${id}`);
 
@@ -27,7 +27,7 @@ export function categoryGetProductsByIdHandler(req: Request, res: Response, next
 }
 
 export function categoryGetByIdHandler(req: Request, res: Response, next: NextFunction): any {
-    const id = req.params.id; // url params
+    const id = req.params.id;
     const existing = categoryUtils.getCategoryById(id);
 
     if (!existing) {
@@ -59,7 +59,7 @@ export function categoryPutHandler(req: Request, res: Response, next: NextFuncti
 
     if (!existing) {
         res.sendStatus(404);
-       return;
+        return;
     }
     const newCategory: Category = req.body as Category;
     (existing.name = newCategory.name);

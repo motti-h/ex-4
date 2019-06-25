@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import {config} from './controllers/routeConfig';
+import {config} from './routes/routeConfig';
 import expressWinston from 'express-winston';
 import winston from 'winston';
 import * as middle from './utils/middleware';

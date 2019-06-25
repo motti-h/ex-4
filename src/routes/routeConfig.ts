@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { productRouter } from './productsController';
-import { categoryRouter } from './categoryController';
-import { loginRouter } from './loginController';
+import { productRouter } from './productsRouter';
+import { categoryRouter } from './categoryRouter';
+import { loginRouter } from './loginRouter';
 interface RouteConfig {
   prefix: string;
   router: Router;
@@ -9,17 +9,17 @@ interface RouteConfig {
 
 const config: { [k: string]: RouteConfig } = {
   products: {
-    prefix: '/products',
+    prefix: 'api/products',
     router: productRouter,
   },
   category: {
-    prefix: '/categories',
+    prefix: 'api/categories',
     router: categoryRouter,
   },
   login: {
-    prefix: '/login',
+    prefix: 'api/login',
     router: loginRouter,
-  }
+  },
 };
 
 export { config };
