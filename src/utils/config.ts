@@ -3,7 +3,6 @@ export enum KnownConfigKey {
 }
 
 function get(key: string): string {
-  // TODO: implement properly
   return 'your_jwt_secret';
 }
 

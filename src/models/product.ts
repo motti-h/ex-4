@@ -4,5 +4,3 @@ export interface Product {
   name: string;
   itemsInStock: number;
 }
-
-//export { Product };

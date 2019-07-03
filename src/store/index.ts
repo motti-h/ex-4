@@ -7,7 +7,7 @@ import users from './users.json';
 
 interface Store {
   products: Product[];
-  categories: Category[]; 
+  categories: Category[];
   users: User[];
   credentials: UserCredential[];
 }
